@@ -6,7 +6,7 @@ This mod allows you to have virtually infinite color presets that you can create
 
 ## Installation
 
-Download the [latest release](./releases/latest) and extract it in the game install folder.
+Download the [latest release](https://github.com/DJDavid98/BSExtraColorPresets/releases/latest) and extract it in the game install folder.
 
 ### Dependencies
 
