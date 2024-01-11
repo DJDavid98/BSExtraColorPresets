@@ -40,7 +40,7 @@ These features are planned in the future, do not make issues requesting them:
 
 ## Credits
 
-Thanks to the Beat Saber Modding Group Discord members below for the pointers, ideas and suggestion:
+Thanks to the Beat Saber Modding Group Discord members below for the pointers, ideas and suggestions:
 
 * [@Futuremappermydud](https://github.com/Futuremappermydud)
 * [@kodenamekrak](https://github.com/kodenamekrak)
