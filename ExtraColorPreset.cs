@@ -1,23 +1,20 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BSExtraColorPresets.UI;
+using BSExtraColorPresets.Util;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BSExtraColorPresets
 {
+    [Obsolete("This is deprecated, please use ExtraColorPresetV2 instead.")]
     public class ExtraColorPreset
     {
         public static string DEFAULT_PRESET_NAME = "0";
-        public static Color DEFAULT_SABER_A_COLOR = new Color(RgbToFloat(168f), RgbToFloat(32f), RgbToFloat(32f));
-        public static Color DEFAULT_SABER_B_COLOR = new Color(RgbToFloat(32f), RgbToFloat(100f), RgbToFloat(168f));
-        public static Color DEFAULT_ENV_0_COLOR = new Color(RgbToFloat(192f), RgbToFloat(48f), RgbToFloat(48f));
-        public static Color DEFAULT_ENV_1_COLOR = new Color(RgbToFloat(48f), RgbToFloat(152f), RgbToFloat(255f));
-        public static Color DEFAULT_OBSTACLES_COLOR = new Color(RgbToFloat(255f), RgbToFloat(48f), RgbToFloat(48f));
+        public static Color DEFAULT_SABER_A_COLOR = new Color(Converter.RgbToFloat(168f), Converter.RgbToFloat(32f), Converter.RgbToFloat(32f));
+        public static Color DEFAULT_SABER_B_COLOR = new Color(Converter.RgbToFloat(32f), Converter.RgbToFloat(100f), Converter.RgbToFloat(168f));
+        public static Color DEFAULT_ENV_0_COLOR = new Color(Converter.RgbToFloat(192f), Converter.RgbToFloat(48f), Converter.RgbToFloat(48f));
+        public static Color DEFAULT_ENV_1_COLOR = new Color(Converter.RgbToFloat(48f), Converter.RgbToFloat(152f), Converter.RgbToFloat(255f));
+        public static Color DEFAULT_OBSTACLES_COLOR = new Color(Converter.RgbToFloat(255f), Converter.RgbToFloat(48f), Converter.RgbToFloat(48f));
         public static Color DEFAULT_ENV_0_BOOST_COLOR = new Color(0, 0, 0, 0);
         public static Color DEFAULT_ENV_1_BOOST_COLOR = new Color(0, 0, 0, 0);
 
@@ -49,10 +46,6 @@ namespace BSExtraColorPresets
             return $"ExtraColorScheme{Guid.NewGuid()}";
         }
 
-        internal static float RgbToFloat(float value) {
-            return value / 255f;
-        }
-
         public ColorScheme ToColorScheme(ColorScheme fallbackScheme)
         {
             return new ColorScheme(colorSchemeId, "", true, name, false, saberAColor, saberBColor, environmentColor0, environmentColor1, fallbackScheme.environmentColorW, true, environmentColor0Boost, environmentColor1Boost, fallbackScheme.environmentColorWBoost, obstaclesColor);
@@ -62,9 +55,22 @@ namespace BSExtraColorPresets
         public void ReloadData(string value)
         {
             Plugin.Log.Info("ExtraColorPreset.ReloadData "+value);
-            Settings.instance.UpdateSelectedDropdownOptions();
+            PresetSelectorSettings.Instance.UpdateSelectedDropdownOptions();
         }
 
+        public ExtraColorPresetV2 ToV2 () {
+            ExtraColorPresetV2 instance = new ExtraColorPresetV2();
+            instance.colorSchemeId = colorSchemeId;
+            instance.name = name;
+            instance.saberAColor = new HexColor(saberAColor);
+            instance.saberBColor = new HexColor(saberBColor);
+            instance.environmentColor0 = new HexColor(environmentColor0);
+            instance.environmentColor1 = new HexColor(environmentColor1);
+            instance.obstaclesColor = new HexColor(obstaclesColor);
+            instance.environmentColor0Boost = new HexColor(environmentColor0Boost);
+            instance.environmentColor1Boost = new HexColor(environmentColor1Boost);
+            return instance;
+        }
     }
 
 }

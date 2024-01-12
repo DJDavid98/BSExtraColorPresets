@@ -36,13 +36,33 @@ namespace BSExtraColorPresets
             Instance = this;
             Log = logger;
             Log.Info("BSExtraColorPresets initialized.");
-            PluginConfig.Instance = conf.Generated<PluginConfig>();
-            Log.Debug("Config loaded");
+            LoadConfig(conf);
             Log.Debug("Apply Harmony patches");
             try { harmony.PatchAll(Assembly.GetExecutingAssembly()); }
             catch (Exception ex) { Log.Debug(ex); }
-            Log.Debug("Adding settings menu");
-            BSMLSettings.instance.AddSettingsMenu("Extra Color Presets", "BSExtraColorPresets.UI.SettingsViewController.bsml", Settings.instance);
+        }
+
+        private void LoadConfig(Config conf)
+        {
+            PluginConfig.Instance = conf.Generated<PluginConfig>();
+            Log.Debug("Config loaded");
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (PluginConfig.Instance.ExtraColorPresets != null && PluginConfig.Instance.ExtraColorPresets.Count() > 0)
+            {
+                Log.Debug("Migrating old color presets…");
+                PluginConfig.Instance.ExtraColorPresetsV2 = PluginConfig.Instance.ExtraColorPresets.ConvertAll(preset => preset.ToV2());
+                PluginConfig.Instance.ExtraColorPresets = null;
+                Log.Debug("Migrated old color presets");
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+            if (PluginConfig.Instance.ExtraColorPresetsV2.Count() == 0)
+            {
+                Log.Debug("Adding initial blank preset");
+                PluginConfig.Instance.ExtraColorPresetsV2.Add(new ExtraColorPresetV2());
+            }
+
+            PresetManagerSettings.Instance.Initialize();
+            PresetSelectorSettings.Instance.Initialize();
         }
 
         #region BSIPA Config

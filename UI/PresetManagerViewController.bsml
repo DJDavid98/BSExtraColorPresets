@@ -1,0 +1,48 @@
+﻿<settings-container xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+	<custom-list visible-cells='5' cell-size='7' id='preset-list' contents='presets' show-scrollbar='true' stick-scrolling='true'>
+		<horizontal child-expand-width='true' vertical-fit='Unconstrained' horizontal-fit='Unconstrained' spacing='2' pad-bottom='1'>
+			<horizontal child-expand-width='true' vertical-fit='Unconstrained' horizontal-fit='Unconstrained'>
+				<text data='preset-name' align='MidlineLeft' font-size='5' />
+			</horizontal>
+
+			<horizontal child-expand-width='true' vertical-fit='Unconstrained' horizontal-fit='PreferredSize' spacing='1'>
+				<button text='Edit' on-click='edit' />
+				<button text='Delete' on-click='delete' />
+			</horizontal>
+		</horizontal>
+	</custom-list>
+
+	<horizontal anchor-max-y='0.15'>
+		<button text='Add New Preset' on-click='click-add-preset-action' vertical-fit='Unconstrained' horizontal-fit='Unconstrained'/>
+	</horizontal>
+
+	<modal id='preset-settings-modal' click-off-closes='false'>
+		<bg>
+			<text id='preset-settings-modal-title' align='Center' font-size='8'></text>
+			<string-setting id='preset-settings-name' text='Preset Display Name' hover-hint='Name displayed in the preset selector dropdown' />
+			<color-setting id='preset-settings-left-saber-color' text='Left Saber Color' />
+			<color-setting id='preset-settings-right-saber-color' text='Right Saber Color' />
+			<color-setting id='preset-settings-env-0-color' text='Environment Color 0' />
+			<color-setting id='preset-settings-env-1-color' text='Environment Color 1' />
+			<color-setting id='preset-settings-obstacles-color' text='Wall Color' />
+
+
+			<horizontal anchor-max-y='10'>
+				<button text='Save' on-click='save-preset-settings-action' vertical-fit='Unconstrained' horizontal-fit='Unconstrained'/>
+				<button text='Cancel' on-click='close-preset-settings-action' vertical-fit='Unconstrained' horizontal-fit='Unconstrained'/>
+			</horizontal>
+		</bg>
+	</modal>
+
+	<modal id='preset-delete-modal' click-off-closes='false'>
+		<bg>
+			<text id='preset-delete-modal-title' align='Center' font-size='8'></text>
+
+
+			<horizontal anchor-max-y='10'>
+				<button text='Delete' on-click='delete-preset-action' vertical-fit='Unconstrained' horizontal-fit='Unconstrained'/>
+				<button text='Keep' on-click='close-preset-delete-action' vertical-fit='Unconstrained' horizontal-fit='Unconstrained'/>
+			</horizontal>
+		</bg>
+	</modal>
+</settings-container>

@@ -1,7 +1,10 @@
-﻿using BeatSaberMarkupLanguage.Attributes;
+﻿using BeatSaberMarkupLanguage;
+using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Components.Settings;
+using BeatSaberMarkupLanguage.GameplaySetup;
 using BeatSaberMarkupLanguage.Parser;
+using BeatSaberMarkupLanguage.Settings;
 using BSExtraColorPresets.Configuration;
 using HMUI;
 using System;
@@ -12,27 +15,37 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static SliderController.Pool;
 
 namespace BSExtraColorPresets.UI
 {
-    public class Settings : MonoBehaviour
+    public class PresetSelectorSettings : MonoBehaviour
     {
-        public static Settings instance = new Settings();
+        public static PresetSelectorSettings Instance = new PresetSelectorSettings();
+
+        public void Initialize()
+        {
+            Plugin.Log.Debug("Adding multiplayer settings menu");
+            GameplaySetup.instance.AddTab("Extra Color Presets", "BSExtraColorPresets.UI.PresetSelectorViewController.bsml", this, MenuType.All);
+        }
 
         [UIValue("enable-plugin")]
         public bool enablePlugin { get { return PluginConfig.Instance.Enabled; } set { PluginConfig.Instance.Enabled = value; } }
 
         [UIValue("selected-preset")]
-        public ExtraColorPreset selectedPreset {
-            get {
-                var selectedPreset = PluginConfig.Instance.ExtraColorPresets.Find(preset => preset.colorSchemeId == PluginConfig.Instance.SelectedPresetId);
+        public ExtraColorPresetV2 selectedPreset
+        {
+            get
+            {
+                var selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == PluginConfig.Instance.SelectedPresetId);
                 return selectedPreset;
             }
             set { PluginConfig.Instance.SelectedPresetId = value.colorSchemeId; }
         }
 
         [UIAction("preset-name")]
-        public string PresetNameFormatter(ExtraColorPreset preset)
+        public string PresetNameFormatter(ExtraColorPresetV2 preset)
         {
             return preset.name;
         }
@@ -40,33 +53,19 @@ namespace BSExtraColorPresets.UI
         [UIComponent("selected-preset-dd")]
         public DropDownListSetting selectedPresetDd;
 
-        [UIComponent("preset-list")]
-        public CustomCellListTableData presetList;
-
         [UIValue("presets")]
-        public List<ExtraColorPreset> presetObjectsList => PluginConfig.Instance.ExtraColorPresets;
+        public List<ExtraColorPresetV2> presetObjectsList => PluginConfig.Instance.ExtraColorPresetsV2;
 
         [UIAction("#post-parse")]
         public void UpdatePresetList()
         {
-            presetList.tableView.ReloadData();
-            UpdateSelectedDropdownOptions();
-        }
-
-
-        [UIAction("click-add-preset-action")]
-        private void ClickAddPresetAction() {
-            Plugin.Log.Info("ClickAddPresetAction");
-            var newPreset = new ExtraColorPreset();
-            newPreset.name = PluginConfig.Instance.ExtraColorPresets.Count().ToString();
-            PluginConfig.Instance.ExtraColorPresets.Add(newPreset);
-            UpdatePresetList();
             UpdateSelectedDropdownOptions();
         }
 
         public void UpdateSelectedDropdownOptions()
         {
-            selectedPresetDd.values = PluginConfig.Instance.ExtraColorPresets;
+            if (selectedPresetDd == null) { return; }
+            selectedPresetDd.values = PluginConfig.Instance.ExtraColorPresetsV2;
             selectedPresetDd.UpdateChoices();
         }
     }

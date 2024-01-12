@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using IPA.Config.Stores;
@@ -17,9 +18,15 @@ namespace BSExtraColorPresets.Configuration
 
         public virtual string SelectedPresetId { get; set; } = null;
 
-        [NonNullable]
+#pragma warning disable CS0618 // Type or member is obsolete
         [UseConverter(typeof(ListConverter<ExtraColorPreset>))]
-        public virtual List<ExtraColorPreset> ExtraColorPresets { get; set; } = new List<ExtraColorPreset>() { new ExtraColorPreset() };
+        [Obsolete("Use ExtraColorPresetsV2 instead")]
+        public virtual List<ExtraColorPreset>? ExtraColorPresets { get; set; }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        [NonNullable]
+        [UseConverter(typeof(ListConverter<ExtraColorPresetV2>))]
+        public virtual List<ExtraColorPresetV2> ExtraColorPresetsV2 { get; set; } = new List<ExtraColorPresetV2>();
 
         /// <summary>
         /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).

@@ -42,6 +42,7 @@ These features are planned in the future, do not make issues requesting them:
 
 Thanks to the Beat Saber Modding Group Discord members below for the pointers, ideas and suggestions:
 
+* [@Caeden117](https://github.com/Caeden117)
 * [@Futuremappermydud](https://github.com/Futuremappermydud)
 * [@kodenamekrak](https://github.com/kodenamekrak)
 * [@Kylemc1413](https://github.com/Kylemc1413)
@@ -50,9 +51,10 @@ Thanks to the Beat Saber Modding Group Discord members below for the pointers, i
 
 Based on existing mods:
 
-* https://github.com/Caeden117/CountersPlus
-* https://github.com/FizzyApple12/DiscordCore
-* https://github.com/Kylemc1413/BeatSaber-CustomColors
-* https://github.com/Kylemc1413/SongCore
-* https://github.com/Meivyn/ExtendedColorSchemes
-* https://github.com/ReadieFur/BSDataPuller
+* https://github.com/Caeden117/CountersPlus (BSML syntax)
+* https://github.com/FizzyApple12/DiscordCore (BSML syntax)
+* https://github.com/Kylemc1413/BeatSaber-CustomColors (prior art)
+* https://github.com/Kylemc1413/SongCore (color replacement injection point)
+* https://github.com/Meivyn/ExtendedColorSchemes (prior art)
+* https://github.com/ReadieFur/BSDataPuller (Harmony patching approach)
+* https://github.com/zeph-yr/JDFixer (how to put the UI in the song select screen)

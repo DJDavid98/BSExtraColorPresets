@@ -128,23 +128,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtraColorPreset.cs" />
+    <Compile Include="ExtraColorPresetV2.cs" />
     <Compile Include="HarmonyPatches\SceneTransitionPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Configuration\PluginConfig.cs" />
     <Compile Include="BSExtraColorPresetsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\Settings.cs" />
+    <Compile Include="UI\PresetManagerSettings.cs" />
+    <Compile Include="UI\PresetSelectorSettings.cs" />
+    <Compile Include="Util\Converter.cs" />
+    <Compile Include="Util\HexColor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\SettingsViewController.bsml" />
+    <EmbeddedResource Include="UI\PresetManagerViewController.bsml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')" />
     <None Include="BSExtraColorPresets.csproj.user" Condition="Exists('BSExtraColorPresets.csproj.user')" />
     <None Include="README.md" />
+    <EmbeddedResource Include="UI\PresetSelectorViewController.bsml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">
