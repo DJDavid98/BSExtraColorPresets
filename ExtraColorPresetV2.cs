@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace BSExtraColorPresets
 {
-    public class ExtraColorPresetV2
+    public class ExtraColorPresetV2 : IMinimalExtraColorPreset
     {
         public static HexColor DEFAULT_SABER_A_COLOR = new HexColor(168, 32, 32);
         public static HexColor DEFAULT_SABER_B_COLOR = new HexColor(32, 100, 168);

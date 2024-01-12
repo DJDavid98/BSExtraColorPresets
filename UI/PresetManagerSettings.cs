@@ -70,7 +70,7 @@ namespace BSExtraColorPresets.UI
         protected bool deleteMode = false;
 
         [UIValue("presets")]
-        public List<ExtraColorPresetV2> presetObjectsList => PluginConfig.Instance.ExtraColorPresetsV2;
+        public List<object> presetObjectsList => PluginConfig.Instance.ExtraColorPresetsV2.ConvertAll<object>(preset => preset);
 
         [UIAction("#post-parse")]
         public void UpdatePresetList()

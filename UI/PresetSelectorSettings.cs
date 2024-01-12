@@ -34,14 +34,14 @@ namespace BSExtraColorPresets.UI
         public bool enablePlugin { get { return PluginConfig.Instance.Enabled; } set { PluginConfig.Instance.Enabled = value; } }
 
         [UIValue("selected-preset")]
-        public MinimalExtraColorPreset selectedPreset
+        public IMinimalExtraColorPreset selectedPreset
         {
             get
             {
                 var selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == PluginConfig.Instance.SelectedPresetId);
                 if (selectedPreset != null)
                 {
-                    return new MinimalExtraColorPreset(selectedPreset);
+                    return selectedPreset;
                 }
 
                 return MinimalExtraColorPreset.randomItem;
@@ -50,7 +50,7 @@ namespace BSExtraColorPresets.UI
         }
 
         [UIAction("preset-name")]
-        public string PresetNameFormatter(MinimalExtraColorPreset preset)
+        public string PresetNameFormatter(IMinimalExtraColorPreset preset)
         {
             return preset.name;
         }
@@ -59,7 +59,7 @@ namespace BSExtraColorPresets.UI
         public DropDownListSetting selectedPresetDd;
 
         [UIValue("presets")]
-        public List<MinimalExtraColorPreset> presetObjectsList => GetAllConfiguredPresets();
+        public List<object> presetObjectsList => GetAllConfiguredPresets();
 
         [UIAction("#post-parse")]
         public void UpdatePresetList()
@@ -70,17 +70,17 @@ namespace BSExtraColorPresets.UI
         public void UpdateSelectedDropdownOptions()
         {
             if (selectedPresetDd == null) { return; }
-            selectedPresetDd.values = GetAllConfiguredPresets();
+            selectedPresetDd.values = presetObjectsList;
             selectedPresetDd.UpdateChoices();
         }
 
-        protected List<MinimalExtraColorPreset> GetAllConfiguredPresets()
+        protected List<object> GetAllConfiguredPresets()
         {
-            var list = new List<MinimalExtraColorPreset>
+            var list = new List<object>
             {
                 MinimalExtraColorPreset.randomItem
             };
-            list.AddRange(PluginConfig.Instance.ExtraColorPresetsV2.ConvertAll(preset => new MinimalExtraColorPreset(preset)));
+            list.AddRange(PluginConfig.Instance.ExtraColorPresetsV2);
             return list;
         }
 
