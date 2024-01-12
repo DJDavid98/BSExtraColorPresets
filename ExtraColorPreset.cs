@@ -51,14 +51,8 @@ namespace BSExtraColorPresets
             return new ColorScheme(colorSchemeId, "", true, name, false, saberAColor, saberBColor, environmentColor0, environmentColor1, fallbackScheme.environmentColorW, true, environmentColor0Boost, environmentColor1Boost, fallbackScheme.environmentColorWBoost, obstaclesColor);
         }
 
-        [UIAction("reload-data")]
-        public void ReloadData(string value)
+        public ExtraColorPresetV2 ToV2()
         {
-            Plugin.Log.Info("ExtraColorPreset.ReloadData "+value);
-            PresetSelectorSettings.Instance.UpdateSelectedDropdownOptions();
-        }
-
-        public ExtraColorPresetV2 ToV2 () {
             ExtraColorPresetV2 instance = new ExtraColorPresetV2();
             instance.colorSchemeId = colorSchemeId;
             instance.name = name;

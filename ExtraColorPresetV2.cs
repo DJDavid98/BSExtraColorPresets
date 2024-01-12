@@ -77,17 +77,14 @@ namespace BSExtraColorPresets
         [UIAction("edit")]
         public void EditAction()
         {
-            Plugin.Log.Info("ExtraColorPresetV2.EditAction");
             PresetManagerSettings.Instance.EditPreset(this);
         }
 
         [UIAction("delete")]
         public void DeleteAction()
         {
-            Plugin.Log.Info("ExtraColorPresetV2.DeleteAction");
             PresetManagerSettings.Instance.ConfirmDeletePreset(this);
         }
-
     }
 
 }

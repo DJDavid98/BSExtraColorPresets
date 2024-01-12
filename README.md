@@ -20,10 +20,10 @@ These can be installed from ModAssistant, and they are required for the mod to w
 1. Open the game settings from the main menu
 2. Go to Mod Settings
 3. Find the "Extra Color Presets" in the list on the left
-4. Enable the mod
-5. Add some presets, change the colors<br>(Note: the list is scrollable even past 4 items, the UI buttons are missing for it right now but with proper controller bindings it can be scrolled)
-6. Select the preset you want to use from the dropdown
-7. Press save
+4. Edit the existing default preset, or add additional ones with the "Add New Preset" button
+5. Click OK to return to the Main Menu and either play solo or join a multiplayer lobby
+6. On the left side, select the "MODS" tab and then "EXTRA COLOR PRESETS" 
+7. Enable the overriding and select the preset you want to use from the dropdown (or leave it on Random for a random selection from all your presets)
 
 ### Future improvements
 
@@ -34,9 +34,11 @@ These features are planned in the future, do not make issues requesting them:
 
 ## Screenshots
 
-<img src="screenshots/settings.jpg" alt="Mod settings screen screenshot" width="300" height="169" />
-
-<img src="screenshots/ingame.jpg" alt="Mod settings screen screenshot" width="300" height="169" />
+<img src="screenshots/mod-settings-list.jpg" alt="Mod settings screenshot showing the list of presets" width="300" height="169" />
+<img src="screenshots/mod-settings-edit.jpg" alt="Mod settings screenshot showing the edit interface for a single preset" width="300" height="169" />
+<img src="screenshots/gameplay-settings.jpg" alt="Gameplay settings screenshot showing the enable toggle and the currently selected preset" width="300" height="169" />
+<img src="screenshots/gameplay-settings-dropdown.jpg" alt="Gameplay settings screenshot showing the selector dropdown options" width="300" height="169" />
+<img src="screenshots/ingame.jpg" alt="In-game screenshot of the selected overrides" width="300" height="169" />
 
 ## Credits
 
@@ -48,6 +50,7 @@ Thanks to the Beat Saber Modding Group Discord members below for the pointers, i
 * [@Kylemc1413](https://github.com/Kylemc1413)
 * [@MillzyDev](https://github.com/MillzyDev)
 * Riley / Nuggo
+* [@RedBrumbler](https://github.com/RedBrumbler)
 
 Based on existing mods:
 

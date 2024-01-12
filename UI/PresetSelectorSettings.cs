@@ -26,7 +26,7 @@ namespace BSExtraColorPresets.UI
 
         public void Initialize()
         {
-            Plugin.Log.Debug("Adding multiplayer settings menu");
+            Plugin.Log.Debug("Adding gameplay setup settings menu");
             GameplaySetup.instance.AddTab("Extra Color Presets", "BSExtraColorPresets.UI.PresetSelectorViewController.bsml", this, MenuType.All);
         }
 
@@ -34,18 +34,23 @@ namespace BSExtraColorPresets.UI
         public bool enablePlugin { get { return PluginConfig.Instance.Enabled; } set { PluginConfig.Instance.Enabled = value; } }
 
         [UIValue("selected-preset")]
-        public ExtraColorPresetV2 selectedPreset
+        public MinimalExtraColorPreset selectedPreset
         {
             get
             {
                 var selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == PluginConfig.Instance.SelectedPresetId);
-                return selectedPreset;
+                if (selectedPreset != null)
+                {
+                    return new MinimalExtraColorPreset(selectedPreset);
+                }
+
+                return MinimalExtraColorPreset.randomItem;
             }
             set { PluginConfig.Instance.SelectedPresetId = value.colorSchemeId; }
         }
 
         [UIAction("preset-name")]
-        public string PresetNameFormatter(ExtraColorPresetV2 preset)
+        public string PresetNameFormatter(MinimalExtraColorPreset preset)
         {
             return preset.name;
         }
@@ -54,7 +59,7 @@ namespace BSExtraColorPresets.UI
         public DropDownListSetting selectedPresetDd;
 
         [UIValue("presets")]
-        public List<ExtraColorPresetV2> presetObjectsList => PluginConfig.Instance.ExtraColorPresetsV2;
+        public List<MinimalExtraColorPreset> presetObjectsList => GetAllConfiguredPresets();
 
         [UIAction("#post-parse")]
         public void UpdatePresetList()
@@ -65,8 +70,19 @@ namespace BSExtraColorPresets.UI
         public void UpdateSelectedDropdownOptions()
         {
             if (selectedPresetDd == null) { return; }
-            selectedPresetDd.values = PluginConfig.Instance.ExtraColorPresetsV2;
+            selectedPresetDd.values = GetAllConfiguredPresets();
             selectedPresetDd.UpdateChoices();
         }
+
+        protected List<MinimalExtraColorPreset> GetAllConfiguredPresets()
+        {
+            var list = new List<MinimalExtraColorPreset>
+            {
+                MinimalExtraColorPreset.randomItem
+            };
+            list.AddRange(PluginConfig.Instance.ExtraColorPresetsV2.ConvertAll(preset => new MinimalExtraColorPreset(preset)));
+            return list;
+        }
+
     }
 }

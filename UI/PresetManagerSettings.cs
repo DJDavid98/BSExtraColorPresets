@@ -75,31 +75,21 @@ namespace BSExtraColorPresets.UI
         [UIAction("#post-parse")]
         public void UpdatePresetList()
         {
-            presetList?.tableView.ReloadData();
-            UpdateDeleteModeButtonText();
+            presetList?.tableView.ReloadDataKeepingPosition();
+            PresetSelectorSettings.Instance.UpdatePresetList();
         }
 
         [UIAction("click-add-preset-action")]
         private void ClickAddPresetAction()
         {
-            Plugin.Log.Debug("ClickAddPresetAction");
             var newPreset = new ExtraColorPresetV2();
             newPreset.name = ExtraColorPresetV2.GenerateName(PluginConfig.Instance.ExtraColorPresetsV2.Count());
             PluginConfig.Instance.ExtraColorPresetsV2.Add(newPreset);
             UpdatePresetList();
         }
 
-        [UIAction("change-mode")]
-        private void ChangeModeAction()
-        {
-            Plugin.Log.Debug("ChangeModeAction");
-            deleteMode = !deleteMode;
-            UpdateDeleteModeButtonText();
-        }
-
         public void EditPreset(ExtraColorPresetV2 preset)
         {
-            Plugin.Log.Debug("EditPreset");
             modalEditingPreset = preset;
 
             presetSettingsModalTitle.text = $"Editing preset \"{modalEditingPreset.name}\"";
@@ -112,10 +102,9 @@ namespace BSExtraColorPresets.UI
 
             presetSettingsModal.Show(true);
         }
-        
+
         public void ConfirmDeletePreset(ExtraColorPresetV2 preset)
         {
-            Plugin.Log.Debug("EditPreset");
             modalEditingPreset = preset;
 
             presetDeleteModalTitle.text = $"Are you sure you want to delete the preset \"{modalEditingPreset.name}\"?";
@@ -125,7 +114,6 @@ namespace BSExtraColorPresets.UI
         [UIAction("save-preset-settings-action")]
         private void SavePresetSettingsAction()
         {
-            Plugin.Log.Debug("SavePresetSettingsAction");
             if (modalEditingPreset != null)
             {
                 modalEditingPreset.name = presetSettingsName.Text;
@@ -141,15 +129,14 @@ namespace BSExtraColorPresets.UI
         [UIAction("close-preset-settings-action")]
         private void ClosePresetSettingsAction()
         {
-            Plugin.Log.Debug("ClosePresetSettingsAction");
             modalEditingPreset = null;
             presetSettingsModal.Hide(true);
+            UpdatePresetList();
         }
 
         [UIAction("delete-preset-action")]
         private void DeletePresetAction()
         {
-            Plugin.Log.Debug("DeletePresetAction");
             if (modalEditingPreset != null)
             {
                 PluginConfig.Instance.ExtraColorPresetsV2.Remove(modalEditingPreset);
@@ -160,14 +147,9 @@ namespace BSExtraColorPresets.UI
         [UIAction("close-preset-delete-action")]
         private void ClosePresetDeleteAction()
         {
-            Plugin.Log.Debug("ClosePresetDeleteAction");
             modalEditingPreset = null;
             presetDeleteModal.Hide(true);
-        }
-
-        public void UpdateDeleteModeButtonText()
-        {
-            modeSwitchButton?.SetButtonText(deleteMode ? "Delete mode" : "Edit mode");
+            UpdatePresetList();
         }
     }
 }

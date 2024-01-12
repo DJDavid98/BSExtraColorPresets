@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using BSExtraColorPresets.UI;
 using IPA.Config.Stores;
 using IPA.Config.Stores.Attributes;
 using IPA.Config.Stores.Converters;
@@ -16,7 +17,8 @@ namespace BSExtraColorPresets.Configuration
         [NonNullable]
         public virtual bool Enabled { get; set; } = false;
 
-        public virtual string SelectedPresetId { get; set; } = null;
+        [NonNullable]
+        public virtual string SelectedPresetId { get; set; } = MinimalExtraColorPreset.randomItem.colorSchemeId;
 
 #pragma warning disable CS0618 // Type or member is obsolete
         [UseConverter(typeof(ListConverter<ExtraColorPreset>))]

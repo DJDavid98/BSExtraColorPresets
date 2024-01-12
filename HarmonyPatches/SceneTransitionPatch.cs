@@ -1,4 +1,5 @@
 ﻿using BSExtraColorPresets.Configuration;
+using BSExtraColorPresets.UI;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace BSExtraColorPresets.HarmonyPatches
     [HarmonyPatch]
     internal class SceneTransitionPatch
     {
+        private static Random random = new Random();
+
         private static IEnumerable<MethodBase> TargetMethods()
         {
             yield return AccessTools.Method(typeof(StandardLevelScenesTransitionSetupDataSO), nameof(StandardLevelScenesTransitionSetupDataSO.Init),
@@ -51,17 +54,24 @@ namespace BSExtraColorPresets.HarmonyPatches
 
         private static void Prefix(ref IDifficultyBeatmap difficultyBeatmap, ref ColorScheme? overrideColorScheme)
         {
-            Plugin.Log.Info("MapColorOverridePatch");
             if (difficultyBeatmap == null || !PluginConfig.Instance.Enabled || PluginConfig.Instance.SelectedPresetId == null)
             {
-                Plugin.Log.Info("MapColorOverridePatch exit 1");
                 return;
             }
 
-            var selectedPreset = PluginConfig.Instance.ExtraColorPresets.Find(preset => preset.colorSchemeId == PluginConfig.Instance.SelectedPresetId);
+            ExtraColorPresetV2 selectedPreset;
+            if (PluginConfig.Instance.SelectedPresetId == MinimalExtraColorPreset.randomItem.colorSchemeId)
+            {
+                Plugin.Log.Info($"Preset selection set to random, picking from available presets…");
+                var randomPresetIndex = random.Next(PluginConfig.Instance.ExtraColorPresetsV2.Count());
+                selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2[randomPresetIndex];
+            }
+            else
+            {
+                selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == PluginConfig.Instance.SelectedPresetId);
+            }
             if (selectedPreset == null)
             {
-                Plugin.Log.Info("MapColorOverridePatch exit 2");
                 return;
             }
 
@@ -69,7 +79,7 @@ namespace BSExtraColorPresets.HarmonyPatches
             var fallbackScheme = overrideColorScheme ?? new ColorScheme(environmentInfoSO.colorScheme);
 
             overrideColorScheme = selectedPreset.ToColorScheme(fallbackScheme);
-            Plugin.Log.Info("MapColorOverridePatch exit 3");
+            Plugin.Log.Info($"Overriding user color scheme with preset \"{selectedPreset.name}\" (ID: {selectedPreset.colorSchemeId})");
         }
     }
 }

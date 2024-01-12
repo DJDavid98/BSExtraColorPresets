@@ -1,4 +1,4 @@
 ﻿<settings-container xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<checkbox text='Enable overriding built-in color settings' value='enable-plugin' apply-on-change='true' />
-	<dropdown-list-setting id='selected-preset-dd' text='Current preset' apply-on-change='true' value='selected-preset' options='presets' formatter='preset-name' hover-hint='Name changes are only reflected here after saving' />
+	<dropdown-list-setting id='selected-preset-dd' text='Current preset' apply-on-change='true' value='selected-preset' options='presets' formatter='preset-name' word-wrapping='false' />
 </settings-container>

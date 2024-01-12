@@ -3,7 +3,7 @@
   "id": "BSExtraColorPresets",
   "name": "BSExtraColorPresets",
   "author": "DJDavid98",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Allows for saving and loading additional color presets via the in-game settings UI",
   "gameVersion": "1.34.2",
   "dependsOn": {
