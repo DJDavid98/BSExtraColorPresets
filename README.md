@@ -34,11 +34,7 @@ These features are planned in the future, do not make issues requesting them:
 
 ## Screenshots
 
-<img src="screenshots/mod-settings-list.jpg" alt="Mod settings screenshot showing the list of presets" width="300" height="169" />
-<img src="screenshots/mod-settings-edit.jpg" alt="Mod settings screenshot showing the edit interface for a single preset" width="300" height="169" />
-<img src="screenshots/gameplay-settings.jpg" alt="Gameplay settings screenshot showing the enable toggle and the currently selected preset" width="300" height="169" />
-<img src="screenshots/gameplay-settings-dropdown.jpg" alt="Gameplay settings screenshot showing the selector dropdown options" width="300" height="169" />
-<img src="screenshots/ingame.jpg" alt="In-game screenshot of the selected overrides" width="300" height="169" />
+<img src="screenshots/mod-settings-list.jpg" alt="Mod settings screenshot showing the list of presets" width="300" height="169" /> <img src="screenshots/mod-settings-edit.jpg" alt="Mod settings screenshot showing the edit interface for a single preset" width="300" height="169" /> <img src="screenshots/gameplay-settings.jpg" alt="Gameplay settings screenshot showing the enable toggle and the currently selected preset" width="300" height="169" /> <img src="screenshots/gameplay-settings-dropdown.jpg" alt="Gameplay settings screenshot showing the selector dropdown options" width="300" height="169" /> <img src="screenshots/ingame.jpg" alt="In-game screenshot of the selected overrides" width="300" height="169" />
 
 ## Credits
 

@@ -16,8 +16,8 @@
 		<button text='Add New Preset' on-click='click-add-preset-action' vertical-fit='Unconstrained' horizontal-fit='Unconstrained'/>
 	</horizontal>
 
-	<modal id='preset-settings-modal' click-off-closes='false' anchor-pos-y='-10' size-delta-x='80' size-delta-y='70'>
-		<vertical pref-height='70' pref-width='80' pad='4'>
+	<modal id='preset-settings-modal' click-off-closes='false' anchor-pos-y='-10' size-delta-x='80' size-delta-y='80'>
+		<vertical pref-height='80' pref-width='80' pad='4'>
 			<text id='preset-settings-modal-title' align='Center' font-size='6' size-delta-x='1' size-delta-y='1'></text>
 
 			<string-setting id='preset-settings-name' text='Display Name' hover-hint='Name displayed in the preset selector dropdown' />
@@ -26,6 +26,8 @@
 			<color-setting id='preset-settings-env-0-color' text='Environment Color 0' />
 			<color-setting id='preset-settings-env-1-color' text='Environment Color 1' />
 			<color-setting id='preset-settings-obstacles-color' text='Wall Color' />
+			<color-setting id='preset-settings-boost-0-color' text='Environment Boost Color 0' />
+			<color-setting id='preset-settings-boost-1-color' text='Environment Boost Color 1' />
 
 
 			<horizontal anchor-max-y='10' pad-top='4' spacing='2'>

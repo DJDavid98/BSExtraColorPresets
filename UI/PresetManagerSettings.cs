@@ -57,6 +57,12 @@ namespace BSExtraColorPresets.UI
         [UIComponent("preset-settings-obstacles-color")]
         public ColorSetting presetSettingsObstaclesColor;
 
+        [UIComponent("preset-settings-boost-0-color")]
+        public ColorSetting presetSettingsBoost0Color;
+
+        [UIComponent("preset-settings-boost-1-color")]
+        public ColorSetting presetSettingsBoost1Color;
+
         [UIComponent("preset-delete-modal")]
         public ModalView presetDeleteModal;
 
@@ -99,6 +105,8 @@ namespace BSExtraColorPresets.UI
             presetSettingsEnv0Color.CurrentColor = modalEditingPreset.environmentColor0.ToUnityColor();
             presetSettingsEnv1Color.CurrentColor = modalEditingPreset.environmentColor1.ToUnityColor();
             presetSettingsObstaclesColor.CurrentColor = modalEditingPreset.obstaclesColor.ToUnityColor();
+            presetSettingsBoost0Color.CurrentColor = modalEditingPreset.environmentColor0Boost.ToUnityColor();
+            presetSettingsBoost1Color.CurrentColor = modalEditingPreset.environmentColor1Boost.ToUnityColor();
 
             presetSettingsModal.Show(true);
         }
@@ -122,6 +130,8 @@ namespace BSExtraColorPresets.UI
                 modalEditingPreset.environmentColor0 = new Util.HexColor(presetSettingsEnv0Color.CurrentColor);
                 modalEditingPreset.environmentColor1 = new Util.HexColor(presetSettingsEnv1Color.CurrentColor);
                 modalEditingPreset.obstaclesColor = new Util.HexColor(presetSettingsObstaclesColor.CurrentColor);
+                modalEditingPreset.environmentColor0Boost = new Util.HexColor(presetSettingsBoost0Color.CurrentColor);
+                modalEditingPreset.environmentColor1Boost = new Util.HexColor(presetSettingsBoost1Color.CurrentColor);
             }
             ClosePresetSettingsAction();
         }
