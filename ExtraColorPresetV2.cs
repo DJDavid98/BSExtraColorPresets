@@ -65,11 +65,9 @@ namespace BSExtraColorPresets
                 saberBColor.ToUnityColor(),
                 environmentColor0.ToUnityColor(),
                 environmentColor1.ToUnityColor(),
-                fallbackScheme.environmentColorW,
                 true,
                 environmentColor0Boost.ToUnityColor(),
                 environmentColor1Boost.ToUnityColor(),
-                fallbackScheme.environmentColorWBoost,
                 obstaclesColor.ToUnityColor()
             );
         }

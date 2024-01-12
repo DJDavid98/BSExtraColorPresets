@@ -25,15 +25,13 @@ namespace BSExtraColorPresets.HarmonyPatches
                     typeof(IPreviewBeatmapLevel),
                     typeof(OverrideEnvironmentSettings),
                     typeof(ColorScheme),
-                    typeof(ColorScheme),
                     typeof(GameplayModifiers),
                     typeof(PlayerSpecificSettings),
                     typeof(PracticeSettings),
                     typeof(string),
                     typeof(bool),
                     typeof(bool),
-                    typeof(BeatmapDataCache),
-                    typeof(RecordingToolManager.SetupData?)
+                    typeof(BeatmapDataCache)
                 });
 
             yield return AccessTools.Method(typeof(MultiplayerLevelScenesTransitionSetupDataSO), nameof(MultiplayerLevelScenesTransitionSetupDataSO.Init),

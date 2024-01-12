@@ -48,7 +48,7 @@ namespace BSExtraColorPresets
 
         public ColorScheme ToColorScheme(ColorScheme fallbackScheme)
         {
-            return new ColorScheme(colorSchemeId, "", true, name, false, saberAColor, saberBColor, environmentColor0, environmentColor1, fallbackScheme.environmentColorW, true, environmentColor0Boost, environmentColor1Boost, fallbackScheme.environmentColorWBoost, obstaclesColor);
+            return new ColorScheme(colorSchemeId, "", true, name, false, saberAColor, saberBColor, environmentColor0, environmentColor1, true, environmentColor0Boost, environmentColor1Boost, obstaclesColor);
         }
 
         public ExtraColorPresetV2 ToV2()
