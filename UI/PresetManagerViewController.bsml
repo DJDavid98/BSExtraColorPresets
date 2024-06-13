@@ -1,5 +1,5 @@
 ﻿<settings-container xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd' anchor-min-x='-0.2'>
-	<custom-list visible-cells='1' cell-size='7' id='preset-list' contents='presets' show-scrollbar='true' stick-scrolling='true' list-width='80' size-delta-x='80' size-delta-y='45'>
+	<custom-list visible-cells='1' cell-size='7' id='preset-list-display' contents='preset-object-list' show-scrollbar='true' stick-scrolling='true' list-width='80' size-delta-x='80' size-delta-y='45'>
 		<horizontal child-expand-width='true' vertical-fit='Unconstrained' horizontal-fit='Unconstrained' spacing='2' pad-bottom='1' pref-width='80'>
 			<horizontal child-expand-width='true' vertical-fit='Unconstrained' horizontal-fit='Unconstrained'>
 				<text data='preset-name' align='TopLeft' font-size='5' word-wrapping='false' size-delta-x='50' size-delta-y='7' />

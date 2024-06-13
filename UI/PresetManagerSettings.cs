@@ -30,8 +30,8 @@ namespace BSExtraColorPresets.UI
             BSMLSettings.instance.AddSettingsMenu("Extra Color Presets", "BSExtraColorPresets.UI.PresetManagerViewController.bsml", this);
         }
 
-        [UIComponent("preset-list")]
-        public CustomCellListTableData? presetList;
+        [UIComponent("preset-list-display")]
+        public CustomCellListTableData? presetListDisplay;
 
         [UIComponent("preset-settings-modal")]
         public ModalView presetSettingsModal;
@@ -75,13 +75,13 @@ namespace BSExtraColorPresets.UI
         protected ExtraColorPresetV2? modalEditingPreset = null;
         protected bool deleteMode = false;
 
-        [UIValue("presets")]
-        public List<object> presetObjectsList => PluginConfig.Instance.ExtraColorPresetsV2.ConvertAll<object>(preset => preset);
+        [UIValue("preset-object-list")]
+        public List<ExtraColorPresetV2> presetObjectsList => PluginConfig.Instance.ExtraColorPresetsV2;
 
         [UIAction("#post-parse")]
         public void UpdatePresetList()
         {
-            presetList?.tableView.ReloadDataKeepingPosition();
+            presetListDisplay?.tableView.ReloadDataKeepingPosition();
             PresetSelectorSettings.Instance.UpdatePresetList();
         }
 

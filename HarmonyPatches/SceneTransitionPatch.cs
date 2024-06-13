@@ -14,49 +14,41 @@ namespace BSExtraColorPresets.HarmonyPatches
     internal class SceneTransitionPatch
     {
         private static Random random = new Random();
-
-        private static IEnumerable<MethodBase> TargetMethods()
+        [HarmonyPatch]
+        internal class CustomSongColorsPatch
         {
-            yield return AccessTools.Method(typeof(StandardLevelScenesTransitionSetupDataSO), nameof(StandardLevelScenesTransitionSetupDataSO.Init),
-                new[]
+            [HarmonyPatch(typeof(StandardLevelScenesTransitionSetupDataSO), "InitColorInfo")]
+            internal class StandardLevelScenesTransitionSetupDataPatch
+            {
+                private static void Postfix(StandardLevelScenesTransitionSetupDataSO __instance)
                 {
-                    typeof(string),
-                    typeof(IDifficultyBeatmap),
-                    typeof(IPreviewBeatmapLevel),
-                    typeof(OverrideEnvironmentSettings),
-                    typeof(ColorScheme),
-                    typeof(ColorScheme),
-                    typeof(GameplayModifiers),
-                    typeof(PlayerSpecificSettings),
-                    typeof(PracticeSettings),
-                    typeof(string),
-                    typeof(bool),
-                    typeof(bool),
-                    typeof(BeatmapDataCache),
-                    typeof(RecordingToolManager.SetupData?)
-                });
+                    var overrideScheme = GetOverrideColorScheme(__instance.colorScheme);
+                    if (overrideScheme == null) return;
 
-            yield return AccessTools.Method(typeof(MultiplayerLevelScenesTransitionSetupDataSO), nameof(MultiplayerLevelScenesTransitionSetupDataSO.Init),
-                new[]
+                    __instance.usingOverrideColorScheme = true;
+                    __instance.colorScheme = overrideScheme;
+                }
+            }
+
+            [HarmonyPatch(typeof(MultiplayerLevelScenesTransitionSetupDataSO), "InitColorInfo")]
+            internal class MultiplayerLevelScenesTransitionSetupDataPatch
+            {
+                private static void Postfix(MultiplayerLevelScenesTransitionSetupDataSO __instance)
                 {
-                    typeof(string),
-                    typeof(IPreviewBeatmapLevel),
-                    typeof(BeatmapDifficulty),
-                    typeof(BeatmapCharacteristicSO),
-                    typeof(IDifficultyBeatmap),
-                    typeof(ColorScheme),
-                    typeof(GameplayModifiers),
-                    typeof(PlayerSpecificSettings),
-                    typeof(PracticeSettings),
-                    typeof(bool)
-                });
+                    var overrideScheme = GetOverrideColorScheme(__instance.colorScheme);
+                    if (overrideScheme == null) return;
+
+                    __instance.usingOverrideColorScheme = true;
+                    __instance.colorScheme = overrideScheme;
+                }
+            }
         }
 
-        private static void Prefix(ref IDifficultyBeatmap difficultyBeatmap, ref ColorScheme? overrideColorScheme)
+        private static ColorScheme? GetOverrideColorScheme(ColorScheme fallbackScheme)
         {
-            if (difficultyBeatmap == null || !PluginConfig.Instance.Enabled || PluginConfig.Instance.SelectedPresetId == null)
+            if (!PluginConfig.Instance.Enabled || PluginConfig.Instance.SelectedPresetId == null)
             {
-                return;
+                return null;
             }
 
             ExtraColorPresetV2 selectedPreset;
@@ -72,14 +64,12 @@ namespace BSExtraColorPresets.HarmonyPatches
             }
             if (selectedPreset == null)
             {
-                return;
+                return null;
             }
 
-            var environmentInfoSO = difficultyBeatmap.GetEnvironmentInfo();
-            var fallbackScheme = overrideColorScheme ?? new ColorScheme(environmentInfoSO.colorScheme);
-
-            overrideColorScheme = selectedPreset.ToColorScheme(fallbackScheme);
+            var overrideColorScheme = selectedPreset.ToColorScheme(fallbackScheme);
             Plugin.Log.Info($"Overriding user color scheme with preset \"{selectedPreset.name}\" (ID: {selectedPreset.colorSchemeId})");
+            return overrideColorScheme;
         }
     }
 }

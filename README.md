@@ -12,8 +12,8 @@ Download the [latest release](https://github.com/DJDavid98/BSExtraColorPresets/r
 
 These can be installed from ModAssistant, and they are required for the mod to work. 
 
-- [BSIPA ^4.3.2](https://github.com/bsmg/BeatSaber-IPA-Reloaded)
-- [BeatSaberMarkupLanguage ^1.8.1](https://github.com/monkeymanboy/BeatSaberMarkupLanguage)
+- [BSIPA](https://github.com/bsmg/BeatSaber-IPA-Reloaded)
+- [BeatSaberMarkupLanguage](https://github.com/monkeymanboy/BeatSaberMarkupLanguage)
 
 ## Configuration
 

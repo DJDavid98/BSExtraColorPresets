@@ -7,10 +7,9 @@ using IPA.Config.Stores;
 using IPA.Config.Stores.Attributes;
 using IPA.Config.Stores.Converters;
 
-[assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace BSExtraColorPresets.Configuration
 {
-    internal class PluginConfig
+    public class PluginConfig
     {
         public static PluginConfig Instance { get; set; }
 
@@ -19,12 +18,6 @@ namespace BSExtraColorPresets.Configuration
 
         [NonNullable]
         public virtual string SelectedPresetId { get; set; } = MinimalExtraColorPreset.randomItem.colorSchemeId;
-
-#pragma warning disable CS0618 // Type or member is obsolete
-        [UseConverter(typeof(ListConverter<ExtraColorPreset>))]
-        [Obsolete("Use ExtraColorPresetsV2 instead")]
-        public virtual List<ExtraColorPreset>? ExtraColorPresets { get; set; }
-#pragma warning restore CS0618 // Type or member is obsolete
 
         [NonNullable]
         [UseConverter(typeof(ListConverter<ExtraColorPresetV2>))]
@@ -51,7 +44,9 @@ namespace BSExtraColorPresets.Configuration
         /// </summary>
         public virtual void CopyFrom(PluginConfig other)
         {
-            // This instance's members populated from other
+            Enabled = other.Enabled;
+            SelectedPresetId = other.SelectedPresetId;
+            ExtraColorPresetsV2 = other.ExtraColorPresetsV2;
         }
     }
 }

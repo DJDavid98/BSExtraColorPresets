@@ -46,15 +46,6 @@ namespace BSExtraColorPresets
         {
             PluginConfig.Instance = conf.Generated<PluginConfig>();
             Log.Debug("Config loaded");
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (PluginConfig.Instance.ExtraColorPresets != null && PluginConfig.Instance.ExtraColorPresets.Count() > 0)
-            {
-                Log.Debug("Migrating old color presets…");
-                PluginConfig.Instance.ExtraColorPresetsV2 = PluginConfig.Instance.ExtraColorPresets.ConvertAll(preset => preset.ToV2());
-                PluginConfig.Instance.ExtraColorPresets = null;
-                Log.Debug("Migrated old color presets");
-            }
-#pragma warning restore CS0618 // Type or member is obsolete
             if (PluginConfig.Instance.ExtraColorPresetsV2.Count() == 0)
             {
                 Log.Debug("Adding initial blank preset");
