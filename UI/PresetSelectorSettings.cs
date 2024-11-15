@@ -27,7 +27,7 @@ namespace BSExtraColorPresets.UI
         public void Initialize()
         {
             Plugin.Log.Debug("Adding gameplay setup settings menu");
-            GameplaySetup.instance.AddTab("Extra Color Presets", "BSExtraColorPresets.UI.PresetSelectorViewController.bsml", this, MenuType.All);
+            GameplaySetup.Instance.AddTab("Extra Color Presets", "BSExtraColorPresets.UI.PresetSelectorViewController.bsml", this, MenuType.All);
         }
 
         [UIValue("enable-plugin")]
@@ -70,7 +70,7 @@ namespace BSExtraColorPresets.UI
         public void UpdateSelectedDropdownOptions()
         {
             if (selectedPresetDd == null) { return; }
-            selectedPresetDd.values = presetObjectsList;
+            selectedPresetDd.Values = presetObjectsList;
             selectedPresetDd.UpdateChoices();
         }
 

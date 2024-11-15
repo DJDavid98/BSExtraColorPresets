@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static SliderController.Pool;
 
 namespace BSExtraColorPresets.UI
 {
@@ -27,14 +26,14 @@ namespace BSExtraColorPresets.UI
         public void Initialize()
         {
             Plugin.Log.Debug("Adding mod settings menu");
-            BSMLSettings.instance.AddSettingsMenu("Extra Color Presets", "BSExtraColorPresets.UI.PresetManagerViewController.bsml", this);
+            BSMLSettings.Instance.AddSettingsMenu("Extra Color Presets", "BSExtraColorPresets.UI.PresetManagerViewController.bsml", this);
         }
 
         [UIComponent("preset-list-display")]
         public CustomCellListTableData? presetListDisplay;
 
         [UIComponent("preset-settings-modal")]
-        public ModalView presetSettingsModal;
+        public ModalViewBase presetSettingsModal;
 
         [UIComponent("preset-settings-modal-title")]
         public TextMeshProUGUI presetSettingsModalTitle;
@@ -64,7 +63,7 @@ namespace BSExtraColorPresets.UI
         public ColorSetting presetSettingsBoost1Color;
 
         [UIComponent("preset-delete-modal")]
-        public ModalView presetDeleteModal;
+        public ModalViewBase presetDeleteModal;
 
         [UIComponent("preset-delete-modal-title")]
         public TextMeshProUGUI presetDeleteModalTitle;
@@ -81,7 +80,7 @@ namespace BSExtraColorPresets.UI
         [UIAction("#post-parse")]
         public void UpdatePresetList()
         {
-            presetListDisplay?.tableView.ReloadDataKeepingPosition();
+            presetListDisplay?.TableView.ReloadDataKeepingPosition();
             PresetSelectorSettings.Instance.UpdatePresetList();
         }
 

@@ -9,6 +9,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using BeatSaberMarkupLanguage.Util;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
@@ -19,11 +21,11 @@ namespace BSExtraColorPresets
     public class Plugin
     {
 
-        public const string PLUGIN_NAME = "extracolorpresets";
+        public const string PluginName = "extracolorpresets";
         internal static Plugin Instance { get; private set; }
         internal static IPALogger Log { get; private set; }
 
-        internal static readonly HarmonyLib.Harmony harmony = new HarmonyLib.Harmony($"art.djdavid98.{PLUGIN_NAME}");
+        private static readonly HarmonyLib.Harmony Harmony = new HarmonyLib.Harmony($"art.djdavid98.{PluginName}");
 
         [Init]
         /// <summary>
@@ -37,7 +39,7 @@ namespace BSExtraColorPresets
             Log = logger;
             LoadConfig(conf);
             Log.Debug("Apply Harmony patches");
-            try { harmony.PatchAll(Assembly.GetExecutingAssembly()); }
+            try { Harmony.PatchAll(Assembly.GetExecutingAssembly()); }
             catch (Exception ex) { Log.Debug(ex); }
             Log.Info("BSExtraColorPresets initialized.");
         }
@@ -46,20 +48,27 @@ namespace BSExtraColorPresets
         {
             PluginConfig.Instance = conf.Generated<PluginConfig>();
             Log.Debug("Config loaded");
-            if (PluginConfig.Instance.ExtraColorPresetsV2.Count() == 0)
+            if (!PluginConfig.Instance.ExtraColorPresetsV2.Any())
             {
                 Log.Debug("Adding initial blank preset");
                 PluginConfig.Instance.ExtraColorPresetsV2.Add(new ExtraColorPresetV2());
             }
-
-            PresetManagerSettings.Instance.Initialize();
-            PresetSelectorSettings.Instance.Initialize();
         }
 
         [OnStart]
-        public void OnApplicationStart()
+        public async Task OnApplicationStart()
         {
             new GameObject("BSExtraColorPresetsController").AddComponent<BSExtraColorPresetsController>();
+
+            await MainMenuAwaiter.WaitForMainMenuAsync();
+            MainMenuAwaiter.MainMenuInitializing += ReinitSettings;
+            ReinitSettings();
+        }
+
+        private void ReinitSettings()
+        {
+            PresetManagerSettings.Instance.Initialize();
+            PresetSelectorSettings.Instance.Initialize();
         }
 
         [OnExit]

@@ -3,11 +3,11 @@
   "id": "BSExtraColorPresets",
   "name": "BSExtraColorPresets",
   "author": "DJDavid98",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Allows for saving and loading additional color presets via the in-game settings UI",
-  "gameVersion": "1.37.0",
+  "gameVersion": "1.38.0",
   "dependsOn": {
-    "BSIPA": "^4.3.4",
-    "BeatSaberMarkupLanguage": "^1.11.2"
+    "BSIPA": "^4.3.5",
+    "BeatSaberMarkupLanguage": "^1.12.3"
   }
 }
