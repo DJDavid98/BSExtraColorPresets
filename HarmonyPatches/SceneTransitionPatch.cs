@@ -58,6 +58,20 @@ namespace BSExtraColorPresets.HarmonyPatches
                 var randomPresetIndex = random.Next(PluginConfig.Instance.ExtraColorPresetsV2.Count());
                 selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2[randomPresetIndex];
             }
+            else if (PluginConfig.Instance.SelectedPresetId == MinimalExtraColorPreset.randomUniqueItem.colorSchemeId)
+            {
+                Plugin.Log.Info($"Preset selection set to uniquely random, picking from available presets…");
+                var randomPresetIndex = random.Next(Plugin.ExtraColorPresetsUniqueSelectable.Count());
+                selectedPreset = Plugin.ExtraColorPresetsUniqueSelectable[randomPresetIndex];
+                
+                Plugin.ExtraColorPresetsUniqueSelectable.RemoveAt(randomPresetIndex);
+                Plugin.Log.Info(Plugin.ExtraColorPresetsUniqueSelectable.Count.ToString() + " presets available");
+                if (!Plugin.ExtraColorPresetsUniqueSelectable.Any())
+                {
+                    Plugin.Log.Info($"Ran out of selectable presets, copying the list again…");
+                    Plugin.ExtraColorPresetsUniqueSelectable = PluginConfig.Instance.ExtraColorPresetsV2.GetRange(0, PluginConfig.Instance.ExtraColorPresetsV2.Count);
+                }
+            }
             else
             {
                 selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == PluginConfig.Instance.SelectedPresetId);

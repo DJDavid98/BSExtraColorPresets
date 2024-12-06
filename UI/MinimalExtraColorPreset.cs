@@ -6,6 +6,7 @@
         public string name { get; }
 
         public static readonly MinimalExtraColorPreset randomItem = new MinimalExtraColorPreset("Random", "random");
+        public static readonly MinimalExtraColorPreset randomUniqueItem = new MinimalExtraColorPreset("Random (Unique)", "randomUnique");
 
         public MinimalExtraColorPreset(ExtraColorPresetV2 preset)
         {

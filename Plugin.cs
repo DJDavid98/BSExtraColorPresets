@@ -27,6 +27,8 @@ namespace BSExtraColorPresets
 
         private static readonly HarmonyLib.Harmony Harmony = new HarmonyLib.Harmony($"art.djdavid98.{PluginName}");
 
+        public static List<ExtraColorPresetV2> ExtraColorPresetsUniqueSelectable;
+
         [Init]
         /// <summary>
         /// Called when the plugin is first loaded by IPA (either when the game starts or when the plugin is enabled if it starts disabled).
@@ -53,6 +55,8 @@ namespace BSExtraColorPresets
                 Log.Debug("Adding initial blank preset");
                 PluginConfig.Instance.ExtraColorPresetsV2.Add(new ExtraColorPresetV2());
             }
+
+            ExtraColorPresetsUniqueSelectable = PluginConfig.Instance.ExtraColorPresetsV2.GetRange(0, PluginConfig.Instance.ExtraColorPresetsV2.Count);
         }
 
         [OnStart]
