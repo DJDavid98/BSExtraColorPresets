@@ -90,6 +90,7 @@ namespace BSExtraColorPresets.UI
             var newPreset = new ExtraColorPresetV2();
             newPreset.name = ExtraColorPresetV2.GenerateName(PluginConfig.Instance.ExtraColorPresetsV2.Count());
             PluginConfig.Instance.ExtraColorPresetsV2.Add(newPreset);
+            Plugin.ExtraColorPresetsUniqueSelectable.Add(newPreset.colorSchemeId);
             UpdatePresetList();
         }
 
@@ -148,6 +149,10 @@ namespace BSExtraColorPresets.UI
         {
             if (modalEditingPreset != null)
             {
+                if (Plugin.ExtraColorPresetsUniqueSelectable.Contains(modalEditingPreset.colorSchemeId))
+                {
+                    Plugin.ExtraColorPresetsUniqueSelectable.Remove(modalEditingPreset.colorSchemeId);   
+                }
                 PluginConfig.Instance.ExtraColorPresetsV2.Remove(modalEditingPreset);
             }
             ClosePresetDeleteAction();
