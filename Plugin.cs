@@ -61,11 +61,7 @@ namespace BSExtraColorPresets
 
         public static void ReinitUniqueSelectables()
         {
-            ExtraColorPresetsUniqueSelectable = new List<string>();
-            PluginConfig.Instance.ExtraColorPresetsV2.ForEach(scheme =>
-            {
-                ExtraColorPresetsUniqueSelectable.Add(scheme.colorSchemeId);
-            });
+            ExtraColorPresetsUniqueSelectable = PluginConfig.Instance.ExtraColorPresetsV2.ConvertAll(scheme => scheme.colorSchemeId);
         }
 
         [OnStart]
