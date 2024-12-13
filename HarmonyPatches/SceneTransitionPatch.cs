@@ -14,6 +14,22 @@ namespace BSExtraColorPresets.HarmonyPatches
     internal class SceneTransitionPatch
     {
         private static Random random = new Random();
+        private static string previousMapID;
+        private static string previousSchemeID;
+
+        private static string GetMapID(BeatmapLevel mapData)
+        {
+            string mapID = mapData.levelID;
+            string mapHash = null;
+            try
+            {
+                mapHash = mapID.Split('_')[2];
+            }
+            catch { }
+
+            return mapHash ?? mapID;
+        }
+        
         [HarmonyPatch]
         internal class CustomSongColorsPatch
         {
@@ -22,7 +38,7 @@ namespace BSExtraColorPresets.HarmonyPatches
             {
                 private static void Postfix(StandardLevelScenesTransitionSetupDataSO __instance)
                 {
-                    var overrideScheme = GetOverrideColorScheme(__instance.colorScheme);
+                    var overrideScheme = GetOverrideColorScheme(__instance.colorScheme, __instance.beatmapLevel);
                     if (overrideScheme == null) return;
 
                     __instance.usingOverrideColorScheme = true;
@@ -35,7 +51,7 @@ namespace BSExtraColorPresets.HarmonyPatches
             {
                 private static void Postfix(MultiplayerLevelScenesTransitionSetupDataSO __instance)
                 {
-                    var overrideScheme = GetOverrideColorScheme(__instance.colorScheme);
+                    var overrideScheme = GetOverrideColorScheme(__instance.colorScheme, __instance.beatmapLevel);
                     if (overrideScheme == null) return;
 
                     __instance.usingOverrideColorScheme = true;
@@ -44,7 +60,7 @@ namespace BSExtraColorPresets.HarmonyPatches
             }
         }
 
-        private static ColorScheme? GetOverrideColorScheme(ColorScheme fallbackScheme)
+        private static ColorScheme? GetOverrideColorScheme(ColorScheme fallbackScheme, BeatmapLevel mapData)
         {
             if (!PluginConfig.Instance.Enabled || PluginConfig.Instance.SelectedPresetId == null)
             {
@@ -61,12 +77,28 @@ namespace BSExtraColorPresets.HarmonyPatches
             else if (PluginConfig.Instance.SelectedPresetId == MinimalExtraColorPreset.randomUniqueItem.colorSchemeId)
             {
                 Plugin.Log.Info($"Preset selection set to uniquely random, picking from available presets…");
-                var randomPresetIndex = random.Next(Plugin.ExtraColorPresetsUniqueSelectable.Count());
-                var selectedPresetID = Plugin.ExtraColorPresetsUniqueSelectable[randomPresetIndex];
-
+                string selectedPresetID = null;
+                
+                string mapID = GetMapID(mapData);
+                if (mapID == previousMapID)
+                {
+                    Plugin.Log.Info("Map is the same as the previous map, using previously selected preset");
+                    selectedPresetID = previousSchemeID;
+                }
                 selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == selectedPresetID);
                 
-                Plugin.ExtraColorPresetsUniqueSelectable.RemoveAt(randomPresetIndex);
+                if(selectedPreset == null)
+                {
+                    Plugin.Log.Info("Selected preset was null, fetching a new one…");
+                    var randomPresetIndex = random.Next(Plugin.ExtraColorPresetsUniqueSelectable.Count());
+                    selectedPresetID = Plugin.ExtraColorPresetsUniqueSelectable[randomPresetIndex];
+                    Plugin.ExtraColorPresetsUniqueSelectable.RemoveAt(randomPresetIndex);
+                    selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == selectedPresetID);
+                }
+                
+                previousMapID = mapID;
+                previousSchemeID = selectedPresetID;
+                
                 Plugin.Log.Info(Plugin.ExtraColorPresetsUniqueSelectable.Count.ToString() + " presets available");
                 if (!Plugin.ExtraColorPresetsUniqueSelectable.Any())
                 {
