@@ -16,19 +16,6 @@ namespace BSExtraColorPresets.HarmonyPatches
         private static Random random = new Random();
         private static string previousMapID;
         private static string previousSchemeID;
-
-        private static string GetMapID(BeatmapLevel mapData)
-        {
-            string mapID = mapData.levelID;
-            string mapHash = null;
-            try
-            {
-                mapHash = mapID.Split('_')[2];
-            }
-            catch { }
-
-            return mapHash ?? mapID;
-        }
         
         [HarmonyPatch]
         internal class CustomSongColorsPatch
@@ -68,25 +55,44 @@ namespace BSExtraColorPresets.HarmonyPatches
             }
 
             ExtraColorPresetV2 selectedPreset;
+            
             if (PluginConfig.Instance.SelectedPresetId == MinimalExtraColorPreset.randomItem.colorSchemeId)
             {
                 Plugin.Log.Info($"Preset selection set to random, picking from available presets…");
-                var randomPresetIndex = random.Next(PluginConfig.Instance.ExtraColorPresetsV2.Count());
-                selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2[randomPresetIndex];
+                string selectedPresetID = null;
+                
+                string mapID = mapData.levelID;
+                if (mapID == previousMapID)
+                {
+                    Plugin.Log.Info("Map is the same as the previous map, using previously selected preset");
+                    selectedPresetID = previousSchemeID;
+                }
+                
+                selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == selectedPresetID);
+                if (selectedPreset == null)
+                {
+                    Plugin.Log.Info("Selected preset was null, fetching a new one…");
+                    var randomPresetIndex = random.Next(PluginConfig.Instance.ExtraColorPresetsV2.Count());
+                    selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2[randomPresetIndex];
+                    selectedPresetID = PluginConfig.Instance.ExtraColorPresetsV2[randomPresetIndex].colorSchemeId;
+                }
+                
+                previousMapID = mapID;
+                previousSchemeID = selectedPresetID;
             }
             else if (PluginConfig.Instance.SelectedPresetId == MinimalExtraColorPreset.randomUniqueItem.colorSchemeId)
             {
                 Plugin.Log.Info($"Preset selection set to uniquely random, picking from available presets…");
                 string selectedPresetID = null;
                 
-                string mapID = GetMapID(mapData);
+                string mapID = mapData.levelID;
                 if (mapID == previousMapID)
                 {
                     Plugin.Log.Info("Map is the same as the previous map, using previously selected preset");
                     selectedPresetID = previousSchemeID;
                 }
-                selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == selectedPresetID);
                 
+                selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == selectedPresetID);
                 if(selectedPreset == null)
                 {
                     Plugin.Log.Info("Selected preset was null, fetching a new one…");
