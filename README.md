@@ -38,7 +38,9 @@ These features are planned in the future, do not make issues requesting them:
 
 ## Credits
 
-Thanks to [@TheBlackParrot](https://github.com/TheBlackParrot) for inspiring the creation of this mod, and for the "Shuffle" preset implementation. Additionally, thanks to the Beat Saber Modding Group Discord members below for the pointers, ideas and suggestions:
+Thanks to [@TheBlackParrot](https://github.com/TheBlackParrot) for inspiring the creation of this mod, the "Shuffle" preset implementation, and for the 1.40.0 update patch.
+
+Additionally, thanks to the Beat Saber Modding Group Discord members below for the pointers, ideas and suggestions:
 
 * [@Caeden117](https://github.com/Caeden117)
 * [@Futuremappermydud](https://github.com/Futuremappermydud)
