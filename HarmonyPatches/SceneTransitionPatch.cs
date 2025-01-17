@@ -105,6 +105,12 @@ namespace BSExtraColorPresets.HarmonyPatches
                         Plugin.ReinitUniqueSelectables();
                     }
 
+                    // Proactively prevent selecting the previous scheme when possible for more variety
+                    if (availablePresets.Count > 1 && previousSchemeID != null)
+                    {
+                        availablePresets = availablePresets.Where(preset => preset.colorSchemeId != previousSchemeID).ToList();
+                    }
+
                     var randomPresetIndex = random.Next(availablePresets.Count);
                     selectedPresetID = availablePresets.ElementAt(randomPresetIndex).colorSchemeId;
                     Plugin.ExtraColorPresetsRandomlySelectedIds.Add(selectedPresetID);
