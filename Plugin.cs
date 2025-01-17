@@ -27,6 +27,8 @@ namespace BSExtraColorPresets
 
         private static readonly HarmonyLib.Harmony Harmony = new HarmonyLib.Harmony($"art.djdavid98.{PluginName}");
 
+        public static HashSet<string> ExtraColorPresetsRandomlySelectedIds;
+
         [Init]
         /// <summary>
         /// Called when the plugin is first loaded by IPA (either when the game starts or when the plugin is enabled if it starts disabled).
@@ -55,6 +57,11 @@ namespace BSExtraColorPresets
             }
         }
 
+        public static void ReinitUniqueSelectables()
+        {
+            ExtraColorPresetsRandomlySelectedIds = new HashSet<string>();
+        }
+
         [OnStart]
         public async Task OnApplicationStart()
         {
@@ -69,6 +76,7 @@ namespace BSExtraColorPresets
         {
             PresetManagerSettings.Instance.Initialize();
             PresetSelectorSettings.Instance.Initialize();
+            ReinitUniqueSelectables();
         }
 
         [OnExit]

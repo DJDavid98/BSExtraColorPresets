@@ -148,6 +148,10 @@ namespace BSExtraColorPresets.UI
         {
             if (modalEditingPreset != null)
             {
+                if (Plugin.ExtraColorPresetsRandomlySelectedIds.Contains(modalEditingPreset.colorSchemeId))
+                {
+                    Plugin.ExtraColorPresetsRandomlySelectedIds.Remove(modalEditingPreset.colorSchemeId);   
+                }
                 PluginConfig.Instance.ExtraColorPresetsV2.Remove(modalEditingPreset);
             }
             ClosePresetDeleteAction();

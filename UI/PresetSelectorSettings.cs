@@ -43,7 +43,12 @@ namespace BSExtraColorPresets.UI
                 {
                     return selectedPreset;
                 }
-
+                
+                if (PluginConfig.Instance.SelectedPresetId == MinimalExtraColorPreset.randomUniqueItem.colorSchemeId)
+                {
+                    return MinimalExtraColorPreset.randomUniqueItem;
+                }
+                
                 return MinimalExtraColorPreset.randomItem;
             }
             set { PluginConfig.Instance.SelectedPresetId = value.colorSchemeId; }
@@ -78,7 +83,8 @@ namespace BSExtraColorPresets.UI
         {
             var list = new List<object>
             {
-                MinimalExtraColorPreset.randomItem
+                MinimalExtraColorPreset.randomItem,
+                MinimalExtraColorPreset.randomUniqueItem
             };
             list.AddRange(PluginConfig.Instance.ExtraColorPresetsV2);
             return list;
