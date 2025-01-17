@@ -27,7 +27,7 @@ namespace BSExtraColorPresets
 
         private static readonly HarmonyLib.Harmony Harmony = new HarmonyLib.Harmony($"art.djdavid98.{PluginName}");
 
-        public static List<string> ExtraColorPresetsUniqueSelectable;
+        public static HashSet<string> ExtraColorPresetsRandomlySelectedIds;
 
         [Init]
         /// <summary>
@@ -55,13 +55,11 @@ namespace BSExtraColorPresets
                 Log.Debug("Adding initial blank preset");
                 PluginConfig.Instance.ExtraColorPresetsV2.Add(new ExtraColorPresetV2());
             }
-            
-            ReinitUniqueSelectables();
         }
 
         public static void ReinitUniqueSelectables()
         {
-            ExtraColorPresetsUniqueSelectable = PluginConfig.Instance.ExtraColorPresetsV2.ConvertAll(scheme => scheme.colorSchemeId);
+            ExtraColorPresetsRandomlySelectedIds = new HashSet<string>();
         }
 
         [OnStart]
@@ -78,6 +76,7 @@ namespace BSExtraColorPresets
         {
             PresetManagerSettings.Instance.Initialize();
             PresetSelectorSettings.Instance.Initialize();
+            ReinitUniqueSelectables();
         }
 
         [OnExit]

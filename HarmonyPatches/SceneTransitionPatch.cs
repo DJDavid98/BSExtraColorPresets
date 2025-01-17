@@ -93,29 +93,32 @@ namespace BSExtraColorPresets.HarmonyPatches
                 }
                 
                 selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == selectedPresetID);
-                if(selectedPreset == null)
+
+                if (selectedPreset == null)
                 {
                     Plugin.Log.Info("Selected preset was null, fetching a new one…");
-                    var randomPresetIndex = random.Next(Plugin.ExtraColorPresetsUniqueSelectable.Count());
-                    selectedPresetID = Plugin.ExtraColorPresetsUniqueSelectable[randomPresetIndex];
-                    Plugin.ExtraColorPresetsUniqueSelectable.RemoveAt(randomPresetIndex);
+                    var availablePresets = PluginConfig.Instance.ExtraColorPresetsV2.FindAll(preset => !Plugin.ExtraColorPresetsRandomlySelectedIds.Contains(preset.colorSchemeId));
+                    Plugin.Log.Info($"{availablePresets} preset(s) available");
+                    if (!availablePresets.Any())
+                    {
+                        Plugin.Log.Info("Ran out of selectable presets, reinitializing blocklist…");
+                        Plugin.ReinitUniqueSelectables();
+                    }
+
+                    var randomPresetIndex = random.Next(availablePresets.Count);
+                    selectedPresetID = availablePresets.ElementAt(randomPresetIndex).colorSchemeId;
+                    Plugin.ExtraColorPresetsRandomlySelectedIds.Add(selectedPresetID);
                     selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == selectedPresetID);
                 }
-                
+
                 previousMapID = mapID;
                 previousSchemeID = selectedPresetID;
-                
-                Plugin.Log.Info(Plugin.ExtraColorPresetsUniqueSelectable.Count.ToString() + " presets available");
-                if (!Plugin.ExtraColorPresetsUniqueSelectable.Any())
-                {
-                    Plugin.Log.Info($"Ran out of selectable presets, copying the list again…");
-                    Plugin.ReinitUniqueSelectables();
-                }
             }
             else
             {
                 selectedPreset = PluginConfig.Instance.ExtraColorPresetsV2.Find(preset => preset.colorSchemeId == PluginConfig.Instance.SelectedPresetId);
             }
+
             if (selectedPreset == null)
             {
                 return null;
